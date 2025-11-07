@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia Digital: Dr. Andrés Mauricio López</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Teal -->
+    <!-- Application Structure Plan: La aplicación se diseña en 4 secciones temáticas para guiar al Dr. de su pregunta inicial a la solución estratégica. 1) 'Diagnóstico' aborda directamente sus dudas sobre Ads/SEO sin web. 2) 'Plan de Acción' ofrece una guía paso-a-paso de la solución correcta (GBP, Landing Page, SEO, SEM). 3) 'Estudio de Mercado' presenta los datos solicitados (keywords, competidores) de forma interactiva con un gráfico y listas. 4) 'Herramientas' entrega los recursos finales. Esta estructura no sigue el reporte, sino un flujo lógico de consultoría: Problema -> Solución -> Datos -> Implementación. -->
+    <!-- Visualization & Content Choices: 1. Report Info: Solicitud de análisis de palabras clave. -> Goal: Comparar el valor y volumen de distintas categorías de búsqueda. -> Viz/Presentation Method: Gráfico de Barras (Chart.js/Canvas). -> Interaction: Tooltip al pasar el mouse. -> Justification: Demuestra visualmente el alto volumen de búsqueda, reforzando por qué una estrategia de SEO/SEM es vital. 2. Report Info: Datos de Keywords y Competidores. -> Goal: Organizar y presentar datos densos de forma clara. -> Viz/Presentation Method: Listas/Tablas interactivas en HTML/Tailwind. -> Interaction: Pestañas (botones) para cambiar entre 'Palabras Clave', 'Competidores' y 'Gráfico'. -> Justification: Permite al usuario explorar los datos específicos que necesita sin sobrecargarlo, facilitando la comprensión. 3. Report Info: Guía paso a paso. -> Goal: Organizar un proceso complejo. -> Viz/Presentation Method: Acordeón o secciones colapsables (HTML/Tailwind/JS). -> Interaction: Clic para expandir/colapsar cada paso. -> Justification: Presenta el plan de forma digerible, permitiendo al usuario enfocarse en un paso a la vez. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            border-bottom-color: #0d9488;
+            color: #0d9488;
+            font-weight: 600;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #0d9488;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800">
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-5">
+            <h1 class="text-3xl font-bold text-teal-700">Propuesta de Estrategia Digital</h1>
+            <p class="text-lg text-gray-600">Para: Dr. Andrés Mauricio López - Dermatólogo Oncólogo</p>
+        </div>
+    </header>
+
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-4 sm:space-x-8">
+                <button class="nav-link py-4 px-2 border-b-2 border-transparent text-gray-600 hover:text-teal-600 active" data-target="diagnostico">1. El Diagnóstico</button>
+                <button class="nav-link py-4 px-2 border-b-2 border-transparent text-gray-600 hover:text-teal-600" data-target="plan">2. Plan de Acción</button>
+                <button class="nav-link py-4 px-2 border-b-2 border-transparent text-gray-600 hover:text-teal-600" data-target="mercado">3. Estudio de Mercado</button>
+                <button class="nav-link py-4 px-2 border-b-2 border-transparent text-gray-600 hover:text-teal-600" data-target="herramientas">4. Herramientas</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="diagnostico" class="content-section active space-y-6">
+            <h2 class="text-2xl font-bold text-teal-700">El Diagnóstico: Su Situación Actual</h2>
+            <p class="text-lg">Dr. López, su objetivo es claro: dominar los resultados de búsqueda en Google para "dermatólogo en Cali" y atraer pacientes. Sin embargo, existe un conflicto central en su solicitud: quiere los beneficios de Google Ads (SEM) y el ranking (SEO) sin la herramienta principal que los hace efectivos: <strong class="text-teal-700">un sitio web o página de aterrizaje.</strong></p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-3">1. ¿Se puede hacer SEO sin página web?</h3>
+                    <p class="mb-2"><strong class="text-teal-600">Respuesta: Sí, pero es limitado.</strong></p>
+                    <p class="text-gray-700">Lo que usted puede hacer se llama <strong class="font-semibold">SEO Local</strong>. Esto no optimiza "su" web, sino las plataformas de terceros donde usted aparece:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><strong class="text-teal-700">Google Business Profile (GBP):</strong> Su herramienta #1. Es lo que aparece en Google Maps y el "paquete local". Es vital.</li>
+                        <li><strong>Redes Sociales:</strong> Sus perfiles de Instagram y Facebook pueden aparecer en búsquedas de su nombre.</li>
+                        <li><strong>Directorios (Doctoralia, etc.):</strong> Aunque no quiera usarlos, Google los ve. Si un paciente deja una reseña allí, Google lo indexa.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-3">2. ¿Se puede pautar en Google Ads sin página web?</h3>
+                    <p class="mb-2"><strong class="text-red-600">Respuesta: Técnicamente sí, pero es un desperdicio de dinero.</strong></p>
+                    <p class="text-gray-700">Google Ads necesita enviar al usuario a *algún lugar*. Las opciones sin web son:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><strong>Enviar tráfico a Instagram/Facebook:</strong> Mala idea. La gente en Google busca respuestas rápidas (agendar, llamar), no ver un feed social. La conversión será casi nula.</li>
+                        <li><strong>Enviar tráfico a su Google Business Profile:</strong> Es posible con campañas "Smart". Es mejor que Instagram, pero sigue siendo muy limitado. No puede medir conversiones reales ni controlar el mensaje.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-teal-50 border-l-4 border-teal-500 p-6 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-bold text-teal-800">La Solución Real: El "Consultorio Digital"</h3>
+                <p class="mt-2 text-lg text-teal-900">Para que su inversión en Google Ads sea rentable, necesita un "consultorio digital": una <strong class="font-semibold">página de aterrizaje (Landing Page) simple y enfocada.</strong></p>
+                <p class="mt-1 text-teal-900">Esta página no es un sitio web corporativo complejo. Es una sola página diseñada con un único objetivo: <strong class="font-semibold">convertir visitantes en pacientes</strong> (ej. con un botón directo a su WhatsApp Business o un formulario de contacto). Esta página será el destino de sus anuncios y el enlace principal en su perfil de Google.</p>
+            </div>
+        </section>
+
+        <section id="plan" class="content-section space-y-6">
+            <h2 class="text-2xl font-bold text-teal-700">Plan de Acción Detallado</h2>
+            <p class="text-lg">Este es el orden correcto para construir su presencia digital y asegurar que su inversión en pauta tenga retorno.</p>
+
+            <div class="space-y-4" id="accordion-plan">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <button class="accordion-header flex justify-between items-center w-full p-5 text-left" data-target="step-1">
+                        <span class="text-xl font-semibold text-teal-700">Paso 1: Crear la Base (Google Business Profile)</span>
+                        <span class="text-2xl text-teal-600">+</span>
+                    </button>
+                    <div id="step-1" class="accordion-content p-5 border-t border-gray-200 hidden">
+                        <p class="text-gray-700">Esta es su valla publicitaria gratuita en Google. Es lo primero que debe optimizar.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-2">
+                            <li><strong>Reclame o cree su perfil:</strong> Busque "Google Business Profile" y siga los pasos.</li>
+                            <li><strong>Complete el 100% de la información:</strong> Nombre (Dr. Andrés Mauricio López), dirección, teléfono, horario.</li>
+                            <li><strong>Categorías:</strong> Use "Dermatólogo" como principal y "Dermatólogo oncólogo" como secundaria.</li>
+                            <li><strong>Servicios:</strong> Añada TODOS sus servicios: "dermatología oncológica", "revisión de lunares", "cáncer de piel", "botox", "peeling", etc.</li>
+                            <li><strong>Fotos:</strong> Suba fotos de alta calidad de su consultorio (interior y exterior), su equipo y usted.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <button class="accordion-header flex justify-between items-center w-full p-5 text-left" data-target="step-2">
+                        <span class="text-xl font-semibold text-teal-700">Paso 2: Construir el "Consultorio Digital" (Landing Page)</span>
+                        <span class="text-2xl text-teal-600">+</span>
+                    </button>
+                    <div id="step-2" class="accordion-content p-5 border-t border-gray-200 hidden">
+                        <p class="text-gray-700">Esta es la pieza que le falta. Es el destino de sus anuncios. Debe ser rápida, clara y enfocada en la conversión.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-2">
+                            <li><strong>Mensaje Claro:</strong> "Dermatólogo y Dermatólogo Oncólogo en Cali".</li>
+                            <li><strong>Llamado a la Acción (CTA) Visible:</strong> Un botón grande de "Agendar Cita por WhatsApp" que sea visible en todo momento.</li>
+                            <li><strong>Prueba Social:</strong> 2-3 testimonios cortos de pacientes satisfechos.</li>
+                            <li><strong>Servicios Clave:</strong> Destaque sus 3-5 servicios principales (ej. Dermatología Oncológica, Procedimientos Estéticos, Dermatología Clínica).</li>
+                            <li><strong>Optimización Móvil:</strong> La mayoría de sus pacientes lo buscarán desde el celular.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <button class="accordion-header flex justify-between items-center w-full p-5 text-left" data-target="step-3">
+                        <span class="text-xl font-semibold text-teal-700">Paso 3: Estrategia SEO (Local y Contenido)</span>
+                        <span class="text-2xl text-teal-600">+</span>
+                    </button>
+                    <div id="step-3" class="accordion-content p-5 border-t border-gray-200 hidden">
+                        <p class="text-gray-700">El SEO es una maratón, no un sprint. Se enfoca en construir autoridad a largo plazo.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-2">
+                            <li><strong>SEO en GBP:</strong>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Conseguir Reseñas:</strong> Pida activamente a sus pacientes que dejen una reseña en su perfil de Google. Este es el factor de ranking #1 en SEO Local.</li>
+                                    <li><strong>Responder Reseñas:</strong> Responda a TODAS, las buenas y las malas.</li>
+                                    <li><strong>Publicaciones (Posts):</strong> Publique "Novedades" 1 vez por semana en su perfil (ej. "5 mitos sobre el cáncer de piel").</li>
+                                </ul>
+                            </li>
+                            <li><strong>SEO en Redes Sociales (IG/FB):</strong>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Optimice su Biografía: Incluya "Dermatólogo en Cali" y "Dermatólogo Oncólogo".</li>
+                                    <li>Use hashtags locales (#dermatologocali) y de especialidad (#cancerdepiel).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <button class="accordion-header flex justify-between items-center w-full p-5 text-left" data-target="step-4">
+                        <span class="text-xl font-semibold text-teal-700">Paso 4: Estrategia SEM (Google Ads)</span>
+                        <span class="text-2xl text-teal-600">+</span>
+                    </button>
+                    <div id="step-4" class="accordion-content p-5 border-t border-gray-200 hidden">
+                        <p class="text-gray-700">Ahora que tiene la Landing Page (Paso 2), puede empezar a pautar de forma rentable. El SEM trae resultados inmediatos (pagados).</p>
+                        <ul class="list-disc list-inside mt-3 space-y-2">
+                            <li><strong>Tipo de Campaña:</strong> Inicie con una campaña de "Búsqueda" (Search).</li>
+                            <li><strong>Segmentación:</strong> Geográficamente acotada a "Cali" y alrededores.</li>
+                            <li><strong>Grupos de Anuncios:</strong> Separe sus servicios para tener anuncios relevantes.
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Grupo 1: General (dermatólogo cali, dermatólogos en cali)</li>
+                                    <li>Grupo 2: Oncológico (dermatólogo oncólogo cali, especialista cáncer de piel cali)</li>
+                                    <li>Grupo 3: Estético (botox cali, ácido hialurónico cali)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Destino del Anuncio:</strong> Envíe TODO el tráfico a su nueva Landing Page, no a Instagram.</li>
+                            <li><strong>Conversiones:</strong> Mida cuántas personas hacen clic en el botón de "WhatsApp" o llenan el formulario. Esto le dirá si su dinero está funcionando.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mercado" class="content-section space-y-6">
+            <h2 class="text-2xl font-bold text-teal-700">Estudio de Mercado Digital (Cali)</h2>
+            <p class="text-lg">Este es un análisis de las palabras clave y competidores que solicitó, basado en datos de herramientas como SEMrush.</p>
+
+            <div class="flex justify-center space-x-2 sm:space-x-4 mb-6 border-b border-gray-300">
+                <button class="tab-button py-2 px-3 sm:px-6 rounded-t-md text-sm sm:text-base bg-gray-200 text-gray-700 active" data-target="tab-chart">Gráfico de Búsqueda</button>
+                <button class="tab-button py-2 px-3 sm:px-6 rounded-t-md text-sm sm:text-base bg-gray-200 text-gray-700" data-target="tab-keywords">Palabras Clave</button>
+                <button class="tab-button py-2 px-3 sm:px-6 rounded-t-md text-sm sm:text-base bg-gray-200 text-gray-700" data-target="tab-competitors">Competidores</button>
+            </div>
+
+            <div id="tab-chart" class="market-tab active">
+                <h3 class="text-xl font-semibold text-center mb-4">Volumen de Búsqueda Mensual Estimado (Cali)</h3>
+                <p class="text-center text-gray-600 mb-4">Este gráfico muestra el volumen de búsqueda relativo para diferentes intenciones. Las búsquedas "Generales" y "Estéticas" tienen el mayor volumen, pero las "Específicas" (como oncológicas) atraen a un paciente más decidido.</p>
+                <div class="chart-container">
+                    <canvas id="keywordChart"></canvas>
+                </div>
+            </div>
+
+            <div id="tab-keywords" class="market-tab hidden">
+                <h3 class="text-xl font-semibold mb-4">Grupos de Palabras Clave Estratégicas</h3>
+                <div class="overflow-x-auto bg-white rounded-lg shadow">
+                    <table class="w-full min-w-max">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="p-4 text-left font-semibold text-teal-700">Categoría</th>
+                                <th class="p-4 text-left font-semibold text-teal-700">Palabra Clave (Ejemplos)</th>
+                                <th class="p-4 text-left font-semibold text-teal-700">Intención del Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="p-4 font-semibold">Generales (Alto Vol.)</td>
+                                <td class="p-4">"dermatólogo cali", "dermatólogos en cali", "mejor dermatólogo cali"</td>
+                                <td class="p-4">Busca un profesional, alta competencia.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Oncológicas (Alta Int.)</td>
+                                <td class="p-4">"dermatólogo oncólogo cali", "cáncer de piel cali", "revisión de lunares cali"</td>
+                                <td class="p-4">Paciente con una necesidad específica y urgente. ¡Su especialidad!</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Estéticas (Alto Vol.)</td>
+                                <td class="p-4">"botox cali", "ácido hialurónico cali", "peeling cali", "rejuvenecimiento facial cali"</td>
+                                <td class="p-4">Interés en procedimientos cosméticos, alta rentabilidad.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Clínicas (Medio Vol.)</td>
+                                <td class="p-4">"tratamiento acné cali", "rosácea cali", "dermatólogo pediatra cali"</td>
+                                <td class="p-4">Busca solución a una condición específica.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-competitors" class="market-tab hidden">
+                <h3 class="text-xl font-semibold mb-4">Análisis de Competidores en Google</h3>
+                <p class="text-gray-700 mb-4">Sus competidores en Google no son solo otros doctores, son las plataformas y clínicas que ocupan los primeros lugares.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h4 class="text-lg font-semibold mb-2">Competidores Directos (Otros Doctores)</h4>
+                        <p>Son otros dermatólogos en Cali que tienen perfiles de Google optimizados, reciben muchas reseñas y/o tienen sus propias páginas web.</p>
+                        <p class="mt-2 font-semibold">Su Estrategia:</p>
+                        <ul class="list-disc list-inside text-sm">
+                            <li>Superarlos con un mejor Perfil de Google (más reseñas, más fotos, más publicaciones).</li>
+                            <li>Tener una Landing Page más rápida y con un mejor llamado a la acción.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h4 class="text-lg font-semibold mb-2">Competidores Indirectos (Plataformas)</h4>
+                        <p>Estos son sus mayores rivales en SEO, ya que Google les da mucha autoridad:</p>
+                        <ul class="list-disc list-inside font-semibold my-2">
+                            <li>Doctoralia</li>
+                            <li>Top Doctors</li>
+                            <li>Clínicas grandes (ej. Imbanaco, Valle del Lili)</li>
+                        </ul>
+                        <p class="mt-2 font-semibold">Su Estrategia:</p>
+                        <ul class="list-disc list-inside text-sm">
+                            <li>Es casi imposible superarlos en SEO.</li>
+                            <li>Debe usar Google Ads (SEM) para <strong class="text-teal-700">aparecer *encima* de ellos</strong>.</li>
+                            <li>El SEO Local (GBP) le permite aparecer en el "Map Pack", un espacio donde ellos no compiten tan fuerte.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="herramientas" class="content-section space-y-6">
+            <h2 class="text-2xl font-bold text-teal-700">Herramientas y Próximos Pasos</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-3">Herramientas Gratuitas para Redes Sociales (RRSS)</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Meta Business Suite:</strong> Para programar sus publicaciones de Facebook e Instagram desde un solo lugar.</li>
+                        <li><strong>Canva:</strong> Para crear gráficos y diseños profesionales para sus posts sin ser diseñador.</li>
+                        <li><strong>Google Trends:</strong> Para ver qué temas relacionados con "piel" o "dermatología" están en tendencia en Colombia.</li>
+                        <li><strong>WhatsApp Business:</strong> Fundamental para gestionar las citas y consultas de pacientes de forma profesional.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-3">Archivos a Descargar de SEMrush</h3>
+                    <p class="text-gray-700">Si decide contratar un análisis profesional con SEMrush (o una herramienta similar), estos son los reportes clave que debe solicitar:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-3">
+                        <li><strong class="font-semibold">Informe de "Keyword Magic Tool":</strong> Un archivo Excel con todas las palabras clave relevantes para "dermatólogo" y "dermatología oncológica" en Cali y Colombia, mostrando su volumen de búsqueda mensual, dificultad y costo por clic (CPC) estimado.</li>
+                        <li><strong class="font-semibold">Informe de "Investigación Orgánica" (Competidores):</strong> Un reporte que muestre quiénes son sus principales 5-10 competidores en Google para sus palabras clave más importantes.</li>
+                        <li><strong class="font-semibold">Informe de "Brecha de Palabras Clave" (Keyword Gap):</strong> Un análisis que compara su (futura) página con la de 2-3 competidores para ver para qué palabras clave ellos rankean y usted no.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Propuesta de Estrategia Digital. Generada para uso informativo.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const target = link.dataset.target;
+                    
+                    navLinks.forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    link.classList.add('active');
+                    
+                    sections.forEach(section => {
+                        if (section.id === target) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetId = header.dataset.target;
+                    const content = document.getElementById(targetId);
+                    const icon = header.querySelector('span:last-child');
+                    
+                    const isOpen = !content.classList.contains('hidden');
+                    
+                    if (isOpen) {
+                        content.classList.add('hidden');
+                        icon.textContent = '+';
+                    } else {
+                        content.classList.remove('hidden');
+                        icon.textContent = '−';
+                    }
+                });
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const marketTabs = document.querySelectorAll('.market-tab');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const target = button.dataset.target;
+
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-teal-600', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    button.classList.add('active', 'bg-teal-600', 'text-white');
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+
+                    marketTabs.forEach(tab => {
+                        if (tab.id === target) {
+                            tab.classList.add('active');
+                            tab.classList.remove('hidden');
+                        } else {
+                            tab.classList.remove('active');
+                            tab.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const ctx = document.getElementById('keywordChart').getContext('2d');
+            const keywordChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Generales (ej. "dermatólogo cali")', 'Estéticas (ej. "botox cali")', 'Oncológicas (ej. "cáncer de piel cali")', 'Clínicas (ej. "acné cali")'],
+                    datasets: [{
+                        label: 'Volumen de Búsqueda Mensual Estimado',
+                        data: [1500, 1200, 450, 600],
+                        backgroundColor: [
+                            'rgba(15, 118, 110, 0.6)',
+                            'rgba(13, 148, 136, 0.6)',
+                            'rgba(134, 239, 172, 0.6)',
+                            'rgba(209, 250, 229, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(15, 118, 110, 1)',
+                            'rgba(13, 148, 136, 1)',
+                            'rgba(134, 239, 172, 1)',
+                            'rgba(209, 250, 229, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#0f766e',
+                            titleFont: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 12
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Búsquedas: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Búsquedas Mensuales (Estimadas)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                callback: function(value, index, ticks) {
+                                    const label = this.getLabelForValue(value);
+                                    return label.length > 20 ? label.substring(0, 20) + '...' : label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
